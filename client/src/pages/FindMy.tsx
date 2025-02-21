@@ -27,7 +27,7 @@ const FindMy = () => {
     return (
         <div>
             {
-                task.length > 0 && task.map(t => <div>
+                task.length > 0 && task.map(t => <div key={t.task_id}>
                     user:{
                         t.Assignee.name||"none"
                     }
