@@ -6,18 +6,20 @@ import { GiveTask } from '../controllers/GiveTask';
 import { index } from '../models';
 import { Op } from 'sequelize';
 import { FindUser } from '../controllers/FindUser';
+import { auth } from '../utils/auth';
 
 export const router=express.Router();
 
 //@ts-ignore
 router.post('/create',User)
 //@ts-ignore
-router.post('/Task',Task)
+router.post('/Task',auth,Task)
 //@ts-ignore
-router.get('/FindTask',FindTask)
+router.get('/FindTask',auth,FindTask)
 //@ts-ignore
-router.get('/GiveTask',GiveTask)
-router.get('/Find', FindUser)
+router.get('/GiveTask',auth,GiveTask)
+//@ts-ignore
+router.get('/Find',auth, FindUser)
 
 
 router.post('/Find', async (req: Request, res: Response) => {

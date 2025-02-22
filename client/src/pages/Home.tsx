@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 interface userIdType {
     user_id: number,name:string
 }
 const Home = () => {
+    const navigation=useNavigate()
     const [userId, setUserId] = useState<userIdType[]>([])
     const [task, setTask] = useState({
 
@@ -16,8 +18,13 @@ const Home = () => {
         const { data } = await axios.get('http://localhost:3000/api/Find',{
             withCredentials: true
         })
-        console.log(data);
-        setUserId(data)
+        if (data.success) {
+            
+            setUserId(data.data)
+        }
+        else{
+navigation('/Login')
+        }
 
     }
     useEffect(() => {
@@ -39,7 +46,7 @@ const Home = () => {
         <div>
             Home
             user {
-                userId.length > 0 && userId.sort((a, b) => a.user_id - b.user_id).map(p => <div key={p.user_id}>{p.user_id} {p.name||"none"}</div>)
+                userId.length > 0 ? userId.sort((a, b) => a.user_id - b.user_id).map(p => <div key={p.user_id}>{p.user_id} {p.name||"none"}</div>):<div>user nhi hai</div>
             }
 
             <div>

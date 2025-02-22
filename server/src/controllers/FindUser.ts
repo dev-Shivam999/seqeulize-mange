@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import {  Response } from "express";
 import { index } from "../models";
 import { Op } from "sequelize";
+import { CustomRequest } from "../utils/auth";
 
-export const FindUser=async(req:Request,res:Response)=>{
-    const { token } = req.cookies
+export const FindUser=async(req:CustomRequest,res:Response)=>{
+    const token  = req.userId
 
+console.log(token);
 
     const data = await index.User.findAll({
         where: {
@@ -14,5 +16,5 @@ export const FindUser=async(req:Request,res:Response)=>{
         },
         attributes: ["user_id", "name"]
     })
-    res.json(data)
+    res.json({success:true,data:data})
 }
